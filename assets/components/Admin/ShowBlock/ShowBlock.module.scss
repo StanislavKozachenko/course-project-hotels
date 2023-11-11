@@ -1,0 +1,8 @@
+.list td:first-child {
+  width: 5%;
+}
+.hotel-items-main {
+  max-height: 80vh;
+  overflow-x: scroll;
+  max-width: unset;
+}

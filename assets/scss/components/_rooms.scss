@@ -1,0 +1,15 @@
+.back-to-main {
+  display: block;
+  padding: 5px 10px;
+  border: 2px solid #3027f9;
+  border-radius: 5px;
+  transition: .3s;
+  &:hover {
+    background: #3027f9;
+    color: #fff;
+  }
+}
+.back-to-main-button {
+  margin-top: 20px;
+  width: fit-content;
+}
