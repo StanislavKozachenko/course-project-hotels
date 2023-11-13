@@ -19,7 +19,7 @@ export const fetchPartOrders = createAsyncThunk(
   'book/fetchPartOrdersStatus',
   async (params, thunkAPI) => {
     const { userId } = params;
-    const { data } = await axios.get(`http://localhost:8080/orders/?userId=${userId}`);
+    const { data } = await axios.get(`//localhost:8000/api/reservation/user/${userId}`);
     if (data.length === 0) {
       return thunkAPI.rejectWithValue('Заказов нет');
     }
@@ -30,7 +30,7 @@ export const fetchPartOrders = createAsyncThunk(
 export const fetchOrders = createAsyncThunk(
   'author/fetchOrdersStatus',
   async (params, thunkAPI) => {
-    const { data } = await axios.get(`http://localhost:8080/orders/all`);
+    const { data } = await axios.get(`//localhost:8000/api/reservation`);
     if (data.length === 0) {
       return thunkAPI.rejectWithValue('Заказов нет');
     }

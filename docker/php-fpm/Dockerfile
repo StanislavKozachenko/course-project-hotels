@@ -18,6 +18,8 @@ COPY ./docker/php-fpm/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 #MySQL
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
+RUN apk --no-cache add libsodium-dev \
+    && docker-php-ext-install sodium
 
 # Configure non-root user.
 ARG PUID=1000

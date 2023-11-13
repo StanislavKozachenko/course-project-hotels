@@ -100,7 +100,7 @@ export default function Cart() {
                   Всего номеров: <b>{totalCount} шт.</b>
                 </span>
                 <span>
-                  Сумма бронирования: <b>{totalPrice.toFixed(2)} $.</b>
+                  Сумма бронирования: <b>{totalPrice.toFixed(2)} $</b>
                 </span>
               </div>
               <div className="cart__bottom-buttons">

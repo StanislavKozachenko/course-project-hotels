@@ -31,6 +31,9 @@ class Reservation
     #[ORM\JoinColumn(nullable: false)]
     private ?Room $room = null;
 
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: '0')]
+    private ?string $total_cost = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,6 +95,18 @@ class Reservation
     public function setRoom(Room $room): static
     {
         $this->room = $room;
+
+        return $this;
+    }
+
+    public function getTotalCost(): ?string
+    {
+        return $this->total_cost;
+    }
+
+    public function setTotalCost(string $total_cost): static
+    {
+        $this->total_cost = $total_cost;
 
         return $this;
     }

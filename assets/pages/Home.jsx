@@ -91,7 +91,7 @@ export default function Home() {
       </div>
       <h2 className="content__title">Все отели</h2>
       {hotelsStatus === 'error' ? (
-        <div>
+        <div className="loading-error">
           <h2>
             Произошла ошибка <icon>😕</icon>
           </h2>

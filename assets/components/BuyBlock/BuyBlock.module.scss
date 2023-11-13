@@ -23,3 +23,37 @@
     }
   }
 }
+.check-date-inputs {
+  display: flex;
+  margin-bottom: 21px;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 10px;
+}
+.submit-h3 {
+  font-weight: normal;
+  font-size: 15px;
+}
+.check-date-input {
+  display: flex;
+  gap: 10px;
+}
+.check-date-input input {
+  max-width: 200px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #0000001f;
+}
+.check-date-input label {
+  min-width: 50px;
+  font-size: 15px;
+}
+.input-p {
+  font-size: 16px;
+}
+.check-date-inputs {
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.45);
+}
+.check-date-inputs p strong {
+  font-weight: bold;
+}

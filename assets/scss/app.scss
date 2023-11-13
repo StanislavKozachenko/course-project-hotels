@@ -7,6 +7,10 @@ body {
   background-color: $background;
 }
 
+.loading-error {
+  margin-bottom: 30px;
+}
+
 .wrapper {
   width: calc(100vw - 100px);
   height: 100%;
@@ -249,7 +253,7 @@ body {
     &-buttons {
       display: flex;
       justify-content: space-between;
-      margin-top: 40px;
+      margin-top: 20px;
 
       .go-back-btn {
         display: flex;
@@ -329,6 +333,10 @@ body {
     }
   }
 }
+.leftButton {
+  margin-bottom: 30px;
+}
+
 .auth {
   display: flex;
   justify-content: center;

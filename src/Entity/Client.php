@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ClientRepository;
+use App\Shared\Security\AuthUserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
     fields: ['email'],
     message: 'This email is already in use on that host.',
 )]
-class Client implements \Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface
+class Client implements \Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface, AuthUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -35,12 +36,15 @@ class Client implements \Symfony\Component\Security\Core\User\PasswordAuthentica
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Reservation::class)]
     private Collection $reservations;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $role = null;
+
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -69,7 +73,7 @@ class Client implements \Symfony\Component\Security\Core\User\PasswordAuthentica
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -128,5 +132,34 @@ class Client implements \Symfony\Component\Security\Core\User\PasswordAuthentica
         }
 
         return $this;
+    }
+
+    public function getRole(): ?string
+    {
+        return $this->role;
+    }
+
+    public function setRole(?string $role): static
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    public function getRoles(): array
+    {
+        return [
+            'ROLE_USER'
+        ];
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
     }
 }

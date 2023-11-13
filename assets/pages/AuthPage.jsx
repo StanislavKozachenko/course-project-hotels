@@ -3,15 +3,23 @@ import Cookies from 'universal-cookie';
 import {SessionContext} from "../Main";
 import axios from "axios";
 import Admin from "./Admin";
+import User from "./User";
+import CryptoJS from "crypto-js";
 
 export default function AuthPage() {
+  const CryptoJS = require("crypto-js");
   const cookies = new Cookies();
   const passRef = useRef();
   const emailRef = useRef();
   const [isAuthorized, setIsAuthorized] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [role, setRole] = useState('');
   const { sessionValue, setSessionValue } = useContext(SessionContext);
+
+  useEffect(()=>{
+    if(cookies.get('user').split(' ')[3] !== null ) {
+      setRole(cookies.get('user').split(' ')[3]);
+    }
+  }, [])
 
   const authUser = () => {
     let formData = new FormData();
@@ -37,8 +45,10 @@ export default function AuthPage() {
   };
   const checkIfUserExist = async () => {
     let result = await authUser();
+    let role = CryptoJS.AES.encrypt(JSON.stringify(result.data.role), 'Generic').toString();
+    setRole(role);
     if (result.status === 200) {
-      cookies.set('user', result.data.email + ' ' + result.data.name + ' ' + result.data.email, { path: '/' });
+      cookies.set('user', result.data.email + ' ' + result.data.name + ' ' + result.data.id + ' ' + role, { path: '/' });
       setSessionValue(result.data);
       setIsAuthorized(true);
     } else if (result.status === 204) {
@@ -49,8 +59,10 @@ export default function AuthPage() {
   };
   const regNewUser = async () => {
     let result = await regUser();
+    let role = CryptoJS.AES.encrypt(result.data.role, 'Generic').toString();
+    setRole(role);
     if (result.status === 200) {
-      cookies.set('user', result.data.email + ' ' + result.data.name + ' ' + result.data.email, { path: '/' });
+      cookies.set('user', result.data.email + ' ' + result.data.name + ' ' + result.data.id + ' ' + role , { path: '/' });
       setSessionValue(result.data);
       setIsAuthorized(true);
     } else {
@@ -62,7 +74,7 @@ export default function AuthPage() {
     setSessionValue('No user');
     setIsAuthorized(false);
   };
-  useEffect(() => {}, [isAuthorized]);
+  useEffect(() => {}, [isAuthorized, role]);
   return (
     <div className="container">
       {!cookies.get('user') ? (
@@ -94,12 +106,12 @@ export default function AuthPage() {
           <span>
             Добро пожаловать, {cookies.get('user').split(' ')[1]}!
           </span>
-          <div>
+          <div className="leftButton">
             <button className="auth__exit" onClick={onExitHandler}>
               Выйти
             </button>
           </div>
-          <Admin />
+          {"admin".toString() === CryptoJS.AES.decrypt(role, 'Generic').toString(CryptoJS.enc.Utf8).replace(/"/g, '') ? <Admin /> : <User />}
         </div>
       )}
     </div>

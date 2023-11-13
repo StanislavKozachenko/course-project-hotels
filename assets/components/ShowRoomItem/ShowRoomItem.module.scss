@@ -22,3 +22,13 @@
 .roomItem:last-child {
   margin-bottom: 0;
 }
+.booked {
+  background-color: #0000004d;
+  cursor: not-allowed;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.16);
+  }
+  &:active {
+    background-color: rgba(0, 0, 0, 0.63);
+  }
+}

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Hotel;
+use App\Entity\Reservation;
 use App\Entity\Room;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -211,14 +212,28 @@ class HotelController extends AbstractController
         $data = [];
 
         foreach ($rooms as $room) {
-            $data[] = [
-                'id' => $room->getId(),
-                'hotel' => $room->getHotel(),
-                'cost' => $room->getCost(),
-                'room_number' => $room->getRoomNumber(),
-                'type' => $room->getType(),
-                'view_from_window' => $room->getViewFromWindow(),
-            ];
+            $result = $doctrine->getRepository(Reservation::class)->findBy(array('room'=>$room));
+            if(!$result) {
+                $data[] = [
+                    'id' => $room->getId(),
+                    'hotel' => $room->getHotel(),
+                    'cost' => $room->getCost(),
+                    'room_number' => $room->getRoomNumber(),
+                    'type' => $room->getType(),
+                    'view_from_window' => $room->getViewFromWindow(),
+                    'status'=>false
+                ];
+            } else {
+                $data[] = [
+                    'id' => $room->getId(),
+                    'hotel' => $room->getHotel(),
+                    'cost' => $room->getCost(),
+                    'room_number' => $room->getRoomNumber(),
+                    'type' => $room->getType(),
+                    'view_from_window' => $room->getViewFromWindow(),
+                    'status'=>true
+                ];
+            }
         }
 
         return $this->json($data);

@@ -32,6 +32,8 @@
         "@react-pdf/renderer": "^3.1.14",
         "@reduxjs/toolkit": "^1.9.7",
         "@types/react": "^18.2.31",
+        "crypto-js": "^4.2.0",
+        "jsonwebtoken": "^9.0.2",
         "lodash.debounce": "^4.0.8",
         "node-sass": "^7.0.3",
         "qs": "^6.11.2",

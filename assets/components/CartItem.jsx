@@ -83,7 +83,7 @@ export default function CartItem(
                   </div>
               </div>
               <div className="cart__item-price">
-                  <b>{(price * count).toFixed(2)}$.</b>
+                  <b>{(price * count).toFixed(2)} $</b>
               </div>
               <div className="cart__item-remove">
                   <div onClick={onClickRemove} className="button button--outline button--circle">

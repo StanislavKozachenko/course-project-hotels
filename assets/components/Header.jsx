@@ -14,7 +14,6 @@ export default function Header() {
   const { sessionValue, setSessionValue } = useContext(SessionContext);
   const cookies = new Cookies();
   const totalCount = items.reduce((sum, item) => sum + item.count, 0);
-  console.log(items);
   useEffect(() => {}, [sessionValue]);
   return (
     <div className="header">

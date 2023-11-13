@@ -15,7 +15,6 @@ const Rooms = () => {
             //}&sortBy=${sortType.sort}&order=desc${search}`,
             // `http://localhost:8080/books/?category=${categoryId}&page=${currentPage}${search}&sortBy=${sortType.sort}`,
         );
-        console.log(data);
         if (data.length === 0) {
             setStatus('error');
         } else {

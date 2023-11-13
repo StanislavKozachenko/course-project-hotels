@@ -16,7 +16,7 @@ export default function User() {
   const cookies = new Cookies();
   const dispatch = useDispatch();
   useEffect(() => {
-    setUserId(parseInt(cookies.get('user').split(' ')[4]));
+    setUserId(parseInt(cookies.get('user').split(' ')[2]));
   }, [selectedAction, orderId]);
   console.log(userId);
   useEffect(() => {

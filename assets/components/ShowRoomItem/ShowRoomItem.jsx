@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './ShowRoomItem.module.scss'
 import {Link} from "react-router-dom";
 import {addItem} from "../../Redux/slices/cartSlice";
@@ -10,10 +10,12 @@ const ShowRoomItem = (
         hotel,
         room_number,
         type,
-        view_from_window
+        view_from_window,
+        status
     }
     ) => {
     const dispatch = useDispatch();
+    const [openedStatus, setOpenedStatus] = useState(true);
     const onClickAdd = () => {
         const item = {
             id,
@@ -21,9 +23,17 @@ const ShowRoomItem = (
             hotel,
             room_number,
             type,
+            status
         };
         dispatch(addItem(item));
     };
+    useEffect(()=>{
+        if(status) {
+            setOpenedStatus(true);
+        } else {
+            setOpenedStatus(false);
+        }
+    }, [openedStatus])
     return (
         <div className="roomItem">
             <div className="roomItemContent">
@@ -35,7 +45,7 @@ const ShowRoomItem = (
                     {view_from_window !== "" ? <li>Вид: <strong>{view_from_window}</strong></li> : ''}
                 </div>
                 <div className="roomItemContent__book">
-                    <button onClick={onClickAdd} className="bookRoom--btn button">Забронировать</button>
+                    <button disabled={openedStatus} onClick={onClickAdd} className={openedStatus ?"bookRoom--btn button booked" : "bookRoom--btn button"}>{openedStatus ? "Забронировано" : "Забронировать"}</button>
                 </div>
             </div>
         </div>

@@ -113,10 +113,10 @@ class Room
         return $this;
     }
 
-    public function getReservation(): ?Reservation
-    {
-        return $this->reservation;
-    }
+    //    public function getReservation(): ?Reservation
+    //    {
+    //        return $this->reservation;
+    //    }
 
     public function setReservation(Reservation $reservation): static
     {

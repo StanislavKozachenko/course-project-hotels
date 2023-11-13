@@ -46,6 +46,7 @@ class UserController extends AbstractController
         $request->request->get('contact_info') ? $client->setContactInfo($request->request->get('contact_info')) : $client->setContactInfo("");
 
         $client->setEmail($request->request->get('email'));
+        $client->setRole('default');
 
         $plaintextPassword = $request->request->get('password');
         $hashedPassword = $passwordHasher->hashPassword(
@@ -63,6 +64,7 @@ class UserController extends AbstractController
                 'name' => $client->getName(),
                 'contact_info' => $client->getContactInfo(),
                 'email' => $client->getEmail(),
+                'role' => $client->getRole(),
             ];
 
             return $this->json($data);
@@ -86,6 +88,7 @@ class UserController extends AbstractController
             'name' => $client->getName(),
             'contact_info' => $client->getContactInfo(),
             'email' => $client->getEmail(),
+            'role' => $client->getRole(),
         ];
 
         return $this->json($data);
@@ -113,6 +116,7 @@ class UserController extends AbstractController
             'name' => $client->getName(),
             'contact_info' => $client->getContactInfo(),
             'email' => $client->getEmail(),
+            'role' => $client->getRole(),
         ];
 
         return $this->json($data);
@@ -155,6 +159,7 @@ class UserController extends AbstractController
             'name' => $client->getName(),
             'contact_info' => $client->getContactInfo(),
             'email' => $client->getEmail(),
+            'role' => $client->getRole(),
         ];
 
         return $this->json($data);

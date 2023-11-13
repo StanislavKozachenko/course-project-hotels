@@ -7,26 +7,34 @@ security:
             cost: 15
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        users_in_memory: { memory: null }
+        app_user_provider:
+            entity:
+                class: App\Entity\Client
+                property: email
     firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-        main:
-            lazy: true
-            provider: users_in_memory
+        login:
+            pattern: ^/user/auth
+            stateless: true
+            json_login:
+                username_path: email
+                check_path: /user/auth # or api_login_check as defined in config/routes.yaml
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
+        api:
+            pattern: ^/api
+            stateless: true
+            jwt: ~
 
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
+        api_token_refresh:
+            pattern: ^/user/refresh
+            stateless: true
+            refresh_jwt: ~
 
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/user/auth, roles: PUBLIC_ACCESS }
+        - { path: ^/user/refresh, roles: PUBLIC_ACCESS }
+        - { path: ^/user/about, roles: IS_AUTHENTICATED_FULLY }
 when@test:
     security:
         password_hashers:
