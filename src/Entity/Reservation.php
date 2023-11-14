@@ -27,12 +27,15 @@ class Reservation
     #[ORM\JoinColumn(nullable: false)]
     private ?Client $client = null;
 
-    #[ORM\OneToOne(inversedBy: 'reservation', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'reservation', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Room $room = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: '0')]
     private ?string $total_cost = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $order_date = null;
 
     public function getId(): ?int
     {
@@ -107,6 +110,18 @@ class Reservation
     public function setTotalCost(string $total_cost): static
     {
         $this->total_cost = $total_cost;
+
+        return $this;
+    }
+
+    public function getOrderDate(): ?\DateTimeInterface
+    {
+        return $this->order_date;
+    }
+
+    public function setOrderDate(?\DateTimeInterface $order_date): static
+    {
+        $this->order_date = $order_date;
 
         return $this;
     }

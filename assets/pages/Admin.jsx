@@ -49,16 +49,14 @@ export default function Admin() {
   const getHotels = async () => {
     dispatch(fetchAllHotels());
   };
-
-  const { books, booksStatus } = useSelector((state) => state.books);
-  const { authors, authorsStatus } = useSelector((state) => state.authors);
+    const { authors, authorsStatus } = useSelector((state) => state.authors);
   const { publishers, publishersStatus } = useSelector((state) => state.publishers);
   const { orders, ordersStatus } = useSelector((state) => state.orders);
   const { transactions, transactionsStatus } = useSelector((state) => state.transactions);
 
   const { hotels, hotelsStatus } = useSelector((state) => state.hotels);
 
-  useEffect(() => {}, [selectedAction]);
+  useEffect(() => {}, [selectedAction, hotels]);
   function selectActionHandler(event) {
     setSelectedAction(event.target.value);
   }
@@ -68,19 +66,12 @@ export default function Admin() {
       value={{
         selectedAction,
         setSelectedAction,
-        books,
-        booksStatus,
-        authors,
-        authorsStatus,
-        publishers,
-        publishersStatus,
-        transactions,
-        transactionsStatus,
         orders,
         ordersStatus,
         orderId,
         setOrderId,
-        hotels
+        hotels,
+          hotelsStatus
       }}>
       {/*{authorsStatus === 'success' && publishersStatus === 'success' ? (*/}
         <div className="admin-container">
@@ -91,12 +82,11 @@ export default function Admin() {
               id="selectAction"
               onChange={selectActionHandler}
               value={selectedAction}>
-              <option value="show">Просмотреть книги</option>
-              <option value="add">Добавить книгу</option>
-              <option value="edit">Править книгу</option>
-              <option value="delete">Удалить книгу</option>
+              <option value="show">Просмотреть отели</option>
+              <option value="add">Добавить отель</option>
+              <option value="edit">Править отель</option>
+              <option value="delete">Удалить отель</option>
               <option value="orders">Просмотреть заказы</option>
-              <option value="transactions">Просмотреть транзакции</option>
               <option value="calc">Рассчитать прибыль</option>
               <option value="report">Отчёт продаж</option>
               <option value="diagram">Диаграмма заказов</option>
@@ -111,8 +101,6 @@ export default function Admin() {
               <DeleteBlock />
             ) : selectedAction === 'orders' ? (
               <ShowOrders context={AdminContext} />
-            ) : selectedAction === 'transactions' ? (
-              <ShowTransactions />
             ) : selectedAction === 'diagram' ? (
               <Diagram />
             ) : selectedAction === 'calc' ? (

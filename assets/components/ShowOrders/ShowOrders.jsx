@@ -8,14 +8,17 @@ export default function ShowOrders({ context }) {
   return (
     <>
       {orderId === 0 ? (
-        <div className="main">
+        <div className="main width-100">
           <table className="show" cellSpacing="12">
             <tbody>
               <tr className="list">
                 <th>Id</th>
                 <th>Сумма</th>
                 <th>Статус</th>
-                <th>Дата</th>
+                <th>Дата заезда</th>
+                <th>Дата выезда</th>
+                <th>Отель</th>
+                <th>Номер комнаты</th>
                 {context === UserContext ? '' : <th>Id пользователя</th>}
               </tr>
               {ordersStatus === 'loading'

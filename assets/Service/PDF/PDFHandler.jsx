@@ -64,13 +64,14 @@ export default function PDFHandler({ orders, isSave, dateFrom, dateTo }) {
   const calcTotal = () => {
     let profitTemp = 0;
     orders.forEach((order) => {
-      profitTemp += order.total;
+      profitTemp += parseFloat(order.total_cost).toFixed(2);
     });
-    setProfit(profitTemp.toFixed(2));
+    setProfit(parseFloat(parseFloat(profitTemp).toFixed(2)));
   };
   useEffect(() => {
     calcTotal();
   }, []);
+  const Br = () => "\n";
   return (
     <>
       {isSave ? (
@@ -81,26 +82,21 @@ export default function PDFHandler({ orders, isSave, dateFrom, dateTo }) {
             </Text>
             <Text style={styles.title}>Заказ</Text>
             <Text style={styles.author}>
-              {cookies.get('user').split(' ')[1]} {cookies.get('user').split(' ')[2]}
+              {cookies.get('user').split(' ')[0]} {cookies.get('user').split(' ')[1]}
             </Text>
             <Text style={styles.subtitle}>
-              на {dateFrom} / {dateTo}
+              от: {dateFrom} <Br />до: {dateTo}
             </Text>
             {orders.map((item, index) => (
               <Text style={styles.text}>
-                ID заказа: {item.id} | Дата заказа: {item.orderDate.split('T')[0]} | Общая
-                стоимость: {item.total.toFixed(2)} | Статус:{' '}
-                {item.code === 200 ? 'Оплачено' : 'Не оплачено'}
+                ID заказа: {item.id}<Br />
+                Дата заселения: {new Date(item.check_in_date).toLocaleDateString()}<Br />
+                Дата выезда: {new Date(item.check_out_date).toLocaleDateString()}<Br />
+                Общая стоимость: {parseFloat(item.total_cost).toFixed(2)} $<Br />
+                Статус: {item.status === 'success' ? 'Оплачено' : 'Не оплачено'}
               </Text>
             ))}
-            <Text style={styles.text}>Общая сумма заказа: {profit}</Text>
-            {/* <Text style={styles.text}>
-              QR:
-              {orders.map((item, index) => (
-                
-              ))}
-            </Text> */}
-            <Text
+           <Text
               style={styles.pageNumber}
               render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
               fixed
@@ -120,12 +116,14 @@ export default function PDFHandler({ orders, isSave, dateFrom, dateTo }) {
             </Text>
             {orders.map((item, index) => (
               <Text style={styles.text}>
-                ID: {item.id} | ID пользователя: {item.userId} | Дата заказа:{' '}
-                {item.orderDate.split('T')[0]} | Общая стоимость: {item.total.toFixed(2)} | Статус:{' '}
-                {item.code === 200 ? 'Оплачено' : 'Не оплачено'}
+                ID: {item.id}<Br />
+                ID пользователя: {item.user.id}<Br />
+                Дата бронирования: {new Date(item.check_in_date).toLocaleDateString()}<Br />
+                Общая стоимость: {parseFloat(item.total_cost).toFixed(2)} $<Br />
+                Статус: {item.status === 'success' ? 'Оплачено' : 'Не оплачено'}<Br />
               </Text>
             ))}
-            <Text style={styles.text}>Общая сумма выручки: {profit}</Text>
+            <Text style={styles.text}>Общая сумма выручки: {profit} $</Text>
             <Text
               style={styles.pageNumber}
               render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}

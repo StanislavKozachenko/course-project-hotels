@@ -32,7 +32,7 @@ class HotelController extends AbstractController
                 'category' => $hotel->getCategory(),
                 'imageUrl' => $hotel->getImageUrl(),
                 'rating' => $hotel->getRating(),
-                'room_count' => $hotel->getRoomCount(),
+                'room_count' => $hotel->getRoomsCount(),
             ];
         }
 
@@ -46,11 +46,7 @@ class HotelController extends AbstractController
 
         $hotel = new Hotel();
         $request->request->get('description') ? $hotel->setDescription($request->request->get('description')) : $hotel->setDescription("");
-        if($request->request->get('room_count')){
-            $hotel->setRoomCount($request->request->get('room_count'));
-        } else {
-            return $this->json("Error: room_count can't be empty!");
-        }
+
         $fields = ['name', 'address', 'category', 'imageUrl', 'rating'];
 
         foreach ($fields as $field) {
@@ -74,7 +70,7 @@ class HotelController extends AbstractController
                 'address' => $hotel->getAddress(),
                 'description' => $hotel->getDescription(),
                 'rating' => $hotel->getRating(),
-                'room_count' => $hotel->getRoomCount(),
+                'room_count' => $hotel->getRoomsCount(),
                 'imageUrl' => $hotel->getImageUrl(),
                 'category' => $hotel->getCategory(),
             ];
@@ -100,7 +96,7 @@ class HotelController extends AbstractController
             'address' => $hotel->getAddress(),
             'description' => $hotel->getDescription(),
             'rating' => $hotel->getRating(),
-            'room_count' => $hotel->getRoomCount(),
+            'room_count' => $hotel->getRoomsCount(),
             'imageUrl' => $hotel->getImageUrl(),
             'category' => $hotel->getCategory(),
         ];
@@ -120,9 +116,11 @@ class HotelController extends AbstractController
 
         $content = json_decode($request->getContent());
 
-        isset($content->description) ? $hotel->setDescription($content->description) : $hotel->setDescription("");
-        if(isset($content->room_count)){
-            $hotel->setRoomCount($content->room_count);
+        //        if(isset($content->room_count)){
+        //            $hotel->setRoomCount($content->room_count);
+        //        }
+        if(isset($content->description)){
+            $hotel->setDescription($content->description);
         }
         $fields = ['name', 'address', 'category', 'imageUrl', 'rating'];
 
@@ -146,7 +144,7 @@ class HotelController extends AbstractController
                 'address' => $hotel->getAddress(),
                 'description' => $hotel->getDescription(),
                 'rating' => $hotel->getRating(),
-                'room_count' => $hotel->getRoomCount(),
+                'room_count' => $hotel->getRoomsCount(),
                 'imageUrl' => $hotel->getImageUrl(),
                 'category' => $hotel->getCategory(),
             ];

@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import './ShowRoomItem.module.scss'
 import {Link} from "react-router-dom";
-import {addItem} from "../../Redux/slices/cartSlice";
-import {useDispatch} from "react-redux";
+import {addItem, findItem, selectCart} from "../../Redux/slices/cartSlice";
+import {useDispatch, useSelector} from "react-redux";
 const ShowRoomItem = (
     {
         id,

@@ -21,9 +21,6 @@ class Hotel
     #[ORM\Column(length: 255, unique: true)]
     private ?string $address = null;
 
-    #[ORM\Column]
-    private ?int $room_count = null;
-
     #[ORM\Column(length: 255)]
     private ?string $category = null;
 
@@ -69,18 +66,6 @@ class Hotel
     public function setAddress(string $address): static
     {
         $this->address = $address;
-
-        return $this;
-    }
-
-    public function getRoomCount(): ?int
-    {
-        return $this->room_count;
-    }
-
-    public function setRoomCount(int $room_count): static
-    {
-        $this->room_count = $room_count;
 
         return $this;
     }
@@ -133,13 +118,13 @@ class Hotel
         return $this;
     }
 
-    //    /**
-    //     * @return Collection<int, Room>
-    //     */
-    //    public function getRooms(): Collection
-    //    {
-    //        return $this->rooms;
-    //    }
+    /**
+     * @return int
+     */
+    public function getRoomsCount(): int
+    {
+        return $this->rooms->count();
+    }
 
     public function addRoom(Room $room): static
     {

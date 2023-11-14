@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import './ShowHotelItem.module.scss';
 import { AdminContext } from '../../../pages/Admin';
+import {Link} from "react-router-dom";
 
 export default function ShowHotelItem({
   id,
@@ -28,19 +29,21 @@ export default function ShowHotelItem({
     <>
       <tr className="hotel">
         <td>
-          <input className="input" name="value" value={id}></input>
+          <input className="input input-menu" name="value" value={id}></input>
         </td>
         <td>
-          <input className="input" name="value" value={name}></input>
+          <Link to={`/hotel/${id}/rooms`}>
+            <input className="input input-menu input-hotel-check" name="value" value={name}/>
+          </Link>
         </td>
         <td>
-          <input className="input" name="value" value={address}></input>
+          <input className="input input-menu" name="value" value={address}></input>
         </td>
         <td>
-          <input className="input" name="value" value={category}></input>
+          <input className="input input-menu" name="value" value={category}></input>
         </td>
         <td>
-          <input className="input" name="value" value={imageUrl}></input>
+          <input className="input input-menu" name="value" value={imageUrl}></input>
         </td>
         {/*<td>*/}
         {/*  <input*/}
@@ -49,7 +52,7 @@ export default function ShowHotelItem({
         {/*    value={sizes.map((size, index) => size)}></input>*/}
         {/*</td>*/}
         <td>
-          <input className="input" name="value" value={rating}></input>
+          <input className="input input-menu" name="value" value={rating}></input>
         </td>
         {/*<td>*/}
         {/*  <input*/}
@@ -58,10 +61,10 @@ export default function ShowHotelItem({
         {/*    value={types.map((type, index) => bookTypes[type])}></input>*/}
         {/*</td>*/}
         <td>
-          <input className="input" name="value" value={room_count}></input>
+          <input className="input input-menu" name="value" value={room_count}></input>
         </td>
         <td>
-          <input className="input" name="value" value={description}></input>
+          <input className="input input-menu" name="value" value={description !== '' ? description : 'Нет описания'}></input>
         </td>
       </tr>
     </>

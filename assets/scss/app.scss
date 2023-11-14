@@ -19,7 +19,23 @@ body {
   border-radius: 10px;
   max-width: 1400px;
 }
-
+.width-100 {
+  width: 100%;
+  max-width: unset !important;
+}
+.input-menu {
+  padding: 0;
+  margin: 0 0 20px;
+}
+.button--outline.cart__item_disabled {
+  border: 1px solid rgba(86, 79, 250, 0.2196078431);
+  &:hover {
+    background-color: rgba(86, 79, 250, 0.2196078431);
+  }
+  &:active {
+    background-color: rgba(121, 120, 168, 0.16);
+  }
+}
 .content {
   padding: 40px 0;
 

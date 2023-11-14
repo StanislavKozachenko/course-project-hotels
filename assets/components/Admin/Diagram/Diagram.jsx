@@ -11,8 +11,8 @@ export default function Diagram() {
     order.code === 200 ? (buyed += 1) : (waited += 1);
   });
   return (
-    <div className="main">
-      <h3 className="header">Процент оплаченных заказов</h3>
+    <div className="main diagram-main">
+      <h3 className="header diagram-header">Процент оплаченных заказов</h3>
       <div>
         <PieChart
           data={[

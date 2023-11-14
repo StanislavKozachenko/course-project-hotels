@@ -1,96 +1,60 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './DeleteBlockItem.module.scss';
-import { AdminContext } from '../../../pages/Admin';
 import axios from 'axios';
 export default function DeleteBlockItem({
-  id,
-  title,
-  price,
-  category,
-  imageUrl,
-  sizes,
-  types,
-  publicationYear,
-  rating,
-  publisherId,
-  authorId,
+                                          id,
+                                          name,
+                                          description,
+                                          address,
+                                          imageUrl,
+                                          category,
+                                          rating,
+                                          room_count
 }) {
-  const { authors, publishers } = useContext(AdminContext);
   function onDeleteHandler() {
     if (document.getElementById('checkbox-' + id).checked) {
-      axios.delete(`http://localhost:8080/books/${id}`).then((data) => console.log(data));
+      axios.delete(`http://localhost:8000/api/hotel/${id}`).then((data) => {console.log(data);alert("Успешно!")});
     } else {
       alert('Необходимо выбрать элемент!');
     }
   }
-  const bookTypes = ['твёрдый', 'мягкий'];
-  const categoryTypes = [
-    'все',
-    'психология',
-    'бестеллеры',
-    'биография',
-    'бизнес',
-    'художественная',
-  ];
+  const categoryTypes = {
+    'Asia': 'Азия',
+    'Europe': 'Европа',
+    'America': 'Америка',
+    'Australia': 'Австралия'
+  };
 
-  types = types.split(',');
-  sizes = sizes.split(',');
   return (
     <>
-      <tr className="book">
+      <tr className="book delete-book">
         <td>
           <input
-            className="input"
+            className="input input-menu"
             type="checkbox"
             name="value"
             id={'checkbox-' + id}></input>
         </td>
         <td>
-          <input className="input" name="value" value={id}></input>
+          <input className="input input-menu" name="value" value={id}></input>
         </td>
         <td>
-          <input className="input" name="value" value={title}></input>
+          <input className="input input-menu" name="value" value={name}></input>
         </td>
         <td>
-          <input className="input" name="value" value={price}></input>
+          <input className="input input-menu" name="value" value={address}></input>
         </td>
         <td>
-          <input className="input" name="value" value={categoryTypes[category]}></input>
+          <input className="input input-menu" name="value" value={categoryTypes[category]}></input>
         </td>
         <td>
-          <input className="input" name="value" value={imageUrl}></input>
+          <input className="input input-menu" name="value" value={imageUrl}></input>
         </td>
-        <td>
-          <input
-              className="input"
-            name="value"
-            value={sizes.map((size, index) => size)}></input>
-        </td>
-        <td>
-          <input className="input" name="value" value={publicationYear}></input>
-        </td>
-        <td>
-          <input
-            className="input"
-            name="value"
-            value={types.map((type, index) => bookTypes[type])}></input>
-        </td>
-        <td>
+         <td>
           <input className="input" name="value" value={rating}></input>
         </td>
         <td>
-          <input
-              className="input"
-            name="value"
-            value={authors[authorId - 1].firstName + ' ' + authors[authorId - 1].lastName}></input>
-        </td>
-        <td>
-          <input
-              className="input"
-            name="value"
-            value={
-              publishers[publisherId - 1].name + ' ' + publishers[publisherId - 1].country
-            }></input>
+          <input className="input" name="value" value={rating}></input>
         </td>
         <td>
           <button

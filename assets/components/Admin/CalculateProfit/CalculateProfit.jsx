@@ -11,19 +11,19 @@ export default function CalculateProfit() {
     let profitLocal = 0;
     if (ordersStatus === 'success') {
       orders.forEach((order) => {
-        if (order.orderDate.split('T')[0].split('-')[1] === new Date().getMonth() + 1) {
-          profitLocal += order.total;
+        if (new Date(order.check_in_date).getMonth() === new Date().getMonth()) {
+          profitLocal += parseFloat(order.total_cost);
         }
       });
+      setProfit(profitLocal);
     }
-    setProfit(profitLocal.toFixed(2));
   };
   useEffect(() => {
     calculateProfit();
   }, [profit]);
   return (
     <>
-      <h3>Прибыль за текущий месяц: {profit} руб.</h3>
+      <h3 className="profit-text">Прибыль за текущий месяц: {profit} $.</h3>
     </>
   );
 }

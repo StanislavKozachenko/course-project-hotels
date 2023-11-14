@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 
 const bookTypes = ['твёрдый', 'мягкий'];
 
-export default function BookBlock({ id, name, address, imageUrl, category, rating, roomCount }) {
+export default function BookBlock({ id, name, address, imageUrl, category, rating, roomsCount }) {
   // types = types.split(',');
   // sizes = sizes.split(',');
 
@@ -24,7 +24,7 @@ export default function BookBlock({ id, name, address, imageUrl, category, ratin
       imageUrl,
       category,
       rating,
-      roomCount
+      roomsCount
     };
     dispatch(addItem(item));
   };
@@ -47,7 +47,7 @@ export default function BookBlock({ id, name, address, imageUrl, category, ratin
               {/*    {bookTypes[type]}*/}
               {/*  </li>*/}
               {/*))}*/}
-              <li>Комнат: {roomCount} </li>
+              <li>Комнат: {roomsCount} </li>
             </ul>
             {/*<ul>*/}
             {/*  {sizes.map((obj, index) => (*/}

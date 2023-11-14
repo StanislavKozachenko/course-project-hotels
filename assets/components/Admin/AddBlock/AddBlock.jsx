@@ -1,54 +1,21 @@
-import React, { useContext, useState } from 'react';
-import { AdminContext } from '../../../pages/Admin';
+import React, { useState } from 'react';
 import './AddBlock.module.scss';
 import axios from 'axios';
 
 export default function AddBlock() {
-  const { authors, publishers } = useContext(AdminContext);
   const [isCorrect, setIsCorrect] = useState(true);
-  const categoryTypes = [
-    'все',
-    'психология',
-    'бестеллеры',
-    'биография',
-    'бизнес',
-    'художественная',
-  ];
-  function getPublisherId(info) {
-    let result;
-    publishers.forEach((el) => {
-      if (info === el.name + ' ' + el.country) {
-        result = el.id;
-      }
-    });
-    return result;
-  }
-  function getAuthorId(info) {
-    let result;
-    authors.forEach((el) => {
-      if (info === el.firstName + ' ' + el.lastName) {
-        result = el.id;
-      }
-    });
-    return result;
-  }
-  function getCategoryId(info) {
-    let result;
-    let i = 0;
-    categoryTypes.forEach((el) => {
-      if (info === el) {
-        result = i;
-      }
-      i++;
-    });
-    return result;
-  }
+  const categoryTypes = {
+    'Asia': 'Азия',
+    'Europe': 'Европа',
+    'America': 'Америка',
+    'Australia': 'Австралия'
+  };
   function getValue(name) {
     let result = false;
     if (document.getElementById(name).value) {
       result = document.getElementById(name).value;
     } else {
-      alert('Данные неверны.');
+      name === 'description' ? result = '' : alert('Данные неверны.');
       setIsCorrect(false);
     }
     return result;
@@ -56,35 +23,18 @@ export default function AddBlock() {
   function onAddHandler(event) {
     if (isCorrect) {
       event.preventDefault();
-      const publisherId = getPublisherId(document.getElementById('publisher').value);
-      const authorId = getAuthorId(document.getElementById('author').value);
-      const category = getCategoryId(document.getElementById('category').value);
-      const title = getValue('title');
-      const sizes = getValue('sizes');
-      const publicationYear = getValue('publicationYear');
-      const types = getValue('types');
-      const imageUrl = getValue('imageUrl');
-      const price = getValue('price');
-      const rating = getValue('rating');
-      const resp = {
-        publisherId: publisherId,
-        authorId: authorId,
-        title: title,
-        sizes: sizes,
-        category: category,
-        publicationYear: publicationYear,
-        types: types,
-        imageUrl: imageUrl,
-        price: price,
-        rating: rating,
-      };
+      const formDataReq = new FormData();
+      const fields = ['category', 'name', 'description', 'address', 'imageUrl', 'rating'];
+
+      fields.forEach(field => {
+        const value = getValue(field);
+        if (value) {
+          formDataReq.append(field, value);
+        }
+      });
       axios
-        .post(`http://localhost:8080/books/add`, JSON.stringify(resp), {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-        .then((data) => console.log(data));
+        .post(`http://localhost:8000/api/hotel`, formDataReq)
+        .then((data) => {console.log(data);alert("Успешно!")});
     }
   }
   return (
@@ -94,97 +44,56 @@ export default function AddBlock() {
           <tbody>
             <tr className="list">
               <th>Название</th>
-              <th>Цена</th>
+              <th>Адрес</th>
               <th>Категория</th>
               <th>URL картинки</th>
-              <th>Размеры</th>
-              <th>Год публикации</th>
-              <th>Тип переплёта</th>
               <th>Рейтинг</th>
-              <th>Автор</th>
-              <th>Издательство</th>
+              <th>Описание</th>
             </tr>
             <tr className="book">
               <td>
                 <input
-                  className="input"
-                  name="title"
+                  className="input input-menu"
+                  name="name"
                   placeholder="Название..."
-                  id={'title'}></input>
+                  id={'name'}></input>
               </td>
               <td>
                 <input
-                  className="input"
-                  name="price"
-                  placeholder="Цена..."
-                  id={'price'}></input>
+                  className="input input-menu"
+                  name="address"
+                  placeholder="Адрес..."
+                  id={'address'}></input>
               </td>
               <td>
-                <select className="input" name="category" id={'category'}>
-                  <option>{categoryTypes[0]}</option>
-                  {categoryTypes.map((obj) =>
-                    obj !== categoryTypes[0] ? <option key={obj.id}>{obj}</option> : '',
-                  )}
+                <select className="input input-menu" name="category" id="category">
+                  {Object.entries(categoryTypes).map(([key, value]) => (
+                      <option key={key} value={key}>
+                        {value}
+                      </option>
+                  ))}
                 </select>
               </td>
               <td>
                 <input
-                  className="input"
+                  className="input input-menu"
                   name="imageUrl"
                   placeholder="Путь к картинке..."
                   id={'imageUrl'}></input>
               </td>
               <td>
                 <input
-                  id={'sizes'}
-                  className="input"
-                  name="sizes"
-                  placeholder="Размеры..."></input>
-              </td>
-              <td>
-                <input
-                    className="input"
-                  name="publicationYear"
-                  placeholder="Год публикации..."
-                  id={'publicationYear'}></input>
-              </td>
-              <td>
-                <input
-                  id={'types'}
-                  className="input"
-                  name="types"
-                  placeholder="Тип переплёта..."></input>
-              </td>
-              <td>
-                <input
-                    className="input"
+                  id={'rating'}
+                  className="input input-menu"
                   name="rating"
-                  placeholder="Рейтинг..."
-                  id={'rating'}></input>
+                  placeholder="Рейтинг..."></input>
               </td>
               <td>
-                <select className="input" name="author" id={'author'}>
-                  <option>{authors[0].firstName + ' ' + authors[0].lastName}</option>
-                  {authors.map((obj) =>
-                    obj !== authors[0] ? (
-                      <option key={obj.id}>{obj.firstName + ' ' + obj.lastName}</option>
-                    ) : (
-                      ''
-                    ),
-                  )}
-                </select>
-              </td>
-              <td>
-                <select className="input" name="publisher" id={'publisher'}>
-                  <option>{publishers[0].name + ' ' + publishers[0].country}</option>
-                  {publishers.map((obj) =>
-                    obj !== publishers[0] ? (
-                      <option key={obj.id}>{obj.name + ' ' + obj.country}</option>
-                    ) : (
-                      ''
-                    ),
-                  )}
-                </select>
+                <input
+                    className="input input-menu"
+                  name="description"
+                  placeholder="Описание..."
+                  id={'description'}></input>
               </td>
               <td>
                 <button type="submit" className="saveBtn" id={'save'} onClick={onAddHandler}>

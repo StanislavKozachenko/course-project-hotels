@@ -30,13 +30,31 @@
   font-size: 16px;
 }
 .report {
-  height: 300px;
+  height: 400px;
   width: 400px;
 }
 .QR {
-  margin: 0 20px;
-  max-height: 160px;
+  margin: 0 10px;
+  max-height: 200px;
 }
 .info {
   display: flex;
+}
+.input-hotel-check {
+  cursor: pointer;
+}
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: fit-content;
+  padding: 30px;
+  border: 1px solid rgba(0, 0, 15, 0.22);
+}
+.modal p {
+  text-align: center;
+  font-size: 19px;
+  font-style: italic;
+  margin-bottom: 30px;
 }

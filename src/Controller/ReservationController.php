@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Client;
 use App\Entity\Reservation;
 use App\Entity\Room;
-use Couchbase\User;
 use DateTime;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
@@ -50,6 +49,7 @@ class ReservationController extends AbstractController
         $entityManager = $doctrine->getManager();
 
         $reservation = new Reservation();
+        $reservation->setOrderDate(new DateTime());
         if($request->request->get('check_in_date')){
             $reservation->setCheckInDate(new DateTime($request->request->get('check_in_date')));
         } else {
@@ -145,5 +145,100 @@ class ReservationController extends AbstractController
 
         return $this->json($data);
     }
+    #[Route('/reservation/{id}', name: 'purchase_reservation',  methods: ['PUT'])]
+    public function purchase(ManagerRegistry $doctrine, int $id): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $reservation = $doctrine
+            ->getRepository(Reservation::class)
+            ->find($id);
 
+        if(!$reservation) {
+            return $this->json('No reservation found for id ' . $id, 404);
+        }
+        $reservation->setStatus('success');
+
+        try {
+            $entityManager->persist($reservation);
+            $entityManager->flush();
+
+            $data =  [
+                'id' => $reservation->getId(),
+                'status' => $reservation->getStatus(),
+                'check_in_date' => $reservation->getCheckInDate(),
+                'check_out_date' => $reservation->getCheckOutDate(),
+                'client' => $reservation->getClient(),
+                'total_cost' => $reservation->getTotalCost(),
+                'room' => $reservation->getRoom()
+            ];
+
+            return $this->json($data);
+        } catch (Exception $exception) {
+            return $this->json("Error: " . $exception->getMessage() . "| Code: " . $exception->getCode());
+        }
+    }
+    #[Route('/reservation/{id}/remove', name: 'app_reservation_delete', methods: ['DELETE'])]
+    public function delete(ManagerRegistry $doctrine, int $id): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $reservation = $entityManager->getRepository(Reservation::class)->find($id);
+
+        if (!$reservation) {
+            return $this->json('No reservation found for id' . $id, 404);
+        }
+        try {
+            $entityManager->remove($reservation);
+
+            $entityManager->flush();
+
+            return $this->json('Deleted a reservation successfully with id ' . $id);
+        } catch (Exception $exception) {
+            return $this->json("Error: " . $exception->getMessage() . "| Code: " . $exception->getCode());
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    #[Route('/reservations/find', name: 'get_date_reservation',  methods: ['GET, HEAD'])]
+    public function getByDateTime(ManagerRegistry $doctrine, Request $request): Response
+    {
+        $reservations = null;
+        if ($request->request->get('find_date_from') && $request->request->get('find_date_to')) {
+            $findDateFrom = $request->request->get('find_date_from');
+            $findDateTo = $request->request->get('find_date_to');
+
+            $reservations = $doctrine
+                ->getRepository(Reservation::class)
+                ->createQueryBuilder('r')
+                ->where('r.order_date >= :findDateFrom')
+                ->andWhere('r.order_date <= :findDateTo')
+                ->setParameter('findDateFrom', $findDateFrom)
+                ->setParameter('findDateTo', $findDateTo)
+                ->getQuery()
+                ->getResult();
+        }
+
+
+        if(!$reservations) {
+            return $this->json('No reservations found ' , 404);
+        }
+
+        $data = [];
+
+        foreach ($reservations as $reservation) {
+            $data[] = [
+                'id' => $reservation->getId(),
+                'status' => $reservation->getStatus(),
+                'check_in_date' => $reservation->getCheckInDate(),
+                'check_out_date' => $reservation->getCheckOutDate(),
+                'client' => $reservation->getClient(),
+                'total_cost' => $reservation->getTotalCost(),
+                'room' => $reservation->getRoom()
+            ];
+        }
+
+
+        return $this->json($data);
+    }
 }

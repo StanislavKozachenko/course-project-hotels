@@ -1,12 +1,12 @@
-.main {
+.report-main {
   display: flex;
   justify-content: space-between;
   max-width: 500px;
 }
-.main span {
+.report-main span {
   font-size: 16px;
 }
-.main * {
+.report-main * {
   margin-right: 15px;
 }
 .reportHandler iframe {

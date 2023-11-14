@@ -3,7 +3,7 @@ import './DeleteBlock.module.scss';
 import { AdminContext } from '../../../pages/Admin';
 import DeleteBlockItem from '../DeleteBlockItem/DeleteBlockItem';
 export default function DeleteBlock() {
-  const { books, booksStatus } = useContext(AdminContext);
+  const { hotels, hotelsStatus } = useContext(AdminContext);
   return (
     <div className="main">
       <table className="show" cellSpacing="12">
@@ -12,19 +12,16 @@ export default function DeleteBlock() {
             <th>#</th>
             <th>ID</th>
             <th>Название</th>
-            <th>Цена</th>
+            <th>Адрес</th>
             <th>Категория</th>
             <th>URL картинки</th>
-            <th>Размеры</th>
-            <th>Год публикации</th>
-            <th>Тип переплёта</th>
             <th>Рейтинг</th>
-            <th>Автор</th>
-            <th>Издательство</th>
+            <th>Количество комнат</th>
+            <th>Описание</th>
           </tr>
-          {booksStatus === 'loading'
+          {hotelsStatus === 'loading'
             ? 'Loading...'
-            : books.map((obj) => <DeleteBlockItem key={obj.id} {...obj} />)}
+            : hotels.map((obj) => <DeleteBlockItem key={obj.id} {...obj} />)}
         </tbody>
       </table>
     </div>

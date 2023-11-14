@@ -5,9 +5,12 @@ import AuthPage from '../../pages/Auth';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import {current} from "@reduxjs/toolkit";
+import {useDispatch} from "react-redux";
+import {clearItems} from "../../Redux/slices/cartSlice";
 
 export default function BuyBlock({items, totalPrice, setIsBuying, isBuying}) {
     const cookies = new Cookies();
+    const dispatch = useDispatch();
     const in_time_ref = useRef([]);
     const out_time_ref = useRef([]);
     const [id, setId] = useState(false);
@@ -48,6 +51,7 @@ export default function BuyBlock({items, totalPrice, setIsBuying, isBuying}) {
             }).then(function (response) {
                 //handle success
                 alert('Заказ оформлен успешно!');
+                dispatch(clearItems());
                 setIsBuying(false);
                 console.log(response);
             }).catch((reason)=>{

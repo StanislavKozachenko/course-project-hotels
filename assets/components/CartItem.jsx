@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addItem, removeCartItem, removeItem } from '../Redux/slices/cartSlice';
+import {addItem, clearItems, removeCartItem, removeItem} from '../Redux/slices/cartSlice';
+import {Link} from "react-router-dom";
 
 export default function CartItem(
     {
@@ -21,14 +22,18 @@ export default function CartItem(
     ) {
   const dispatch = useDispatch();
   const onClickPlus = () => {
-    dispatch(
-      addItem({
-        id,
-      }),
-    );
+    // dispatch(
+    //   addItem({
+    //     id,
+    //   }),
+    // );
   };
   const onClickMinus = () => {
     dispatch(removeCartItem(id));
+    console.log(count);
+    if(count <= 1){
+        dispatch(clearItems())
+    }
   };
   const onClickRemove = () => {
     dispatch(removeItem(id));
@@ -36,8 +41,12 @@ export default function CartItem(
   return (
       <>
           {count > 0 ? <div className="cart__item">
-              <div className="cart__item-img">
-                  <img className="book-block__image" src={hotel.imageUrl} alt="Book" />
+              <div className="cart__item-img" style={{width: '150px'}}>
+                  <Link to={`/hotel/${hotel.id}/rooms`} style={{width: '100%', display: 'block'}}>
+                  <div className="book-block__image" style={{height: '150px'}}>
+                      <div className="book-block__image_content" style={{backgroundImage: `url(${hotel.imageUrl})`, backgroundSize: "cover"}}></div>
+                  </div>
+                  </Link>
               </div>
               <div className="cart__item-info">
                   <h3>{hotel.name}</h3>
@@ -66,7 +75,7 @@ export default function CartItem(
                   <b>{count}</b>
                   <div
                       onClick={onClickPlus}
-                      className="button button--outline button--circle cart__item-count-plus">
+                      className="button button--outline button--circle cart__item-count-plus cart__item_disabled">
                       <svg
                           width="10"
                           height="10"

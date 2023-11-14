@@ -29,7 +29,7 @@ export default function Report() {
   const { reportOrders, reportOrdersStatus } = useSelector((state) => state.orders);
   return (
     <div>
-      <div className="main">
+      <div className="main report-main">
         <span>Введите период:</span>
         <input
           type="date"

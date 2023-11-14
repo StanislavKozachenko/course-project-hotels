@@ -105,21 +105,30 @@ class UserController extends AbstractController
         }
 
         $content = json_decode($request->getContent());
-        $client->setName($content->name);
-        $client->setEmail($content->email);
-        $client->setContactInfo($content->contact_info);
+        if(isset($content->contact_info)){
+            $client->setContactInfo($content->contact_info);
+        }
+        if(isset($content->name)){
+            $client->setName($content->name);
+        }
+        if(isset($content->email)){
+            $client->setEmail($content->email);
+        }
+        try {
+            $entityManager->flush();
 
-        $entityManager->flush();
+            $data =  [
+                'id' => $client->getId(),
+                'name' => $client->getName(),
+                'contact_info' => $client->getContactInfo(),
+                'email' => $client->getEmail(),
+                'role' => $client->getRole(),
+            ];
 
-        $data =  [
-            'id' => $client->getId(),
-            'name' => $client->getName(),
-            'contact_info' => $client->getContactInfo(),
-            'email' => $client->getEmail(),
-            'role' => $client->getRole(),
-        ];
-
-        return $this->json($data);
+            return $this->json($data);
+        } catch (\Exception $exception) {
+            return $this->json("Error: " . $exception->getMessage() . "| Code: " . $exception->getCode());
+        }
     }
 
     #[Route('/user/{id}', name: 'app_user_delete', methods: ['DELETE'])]
