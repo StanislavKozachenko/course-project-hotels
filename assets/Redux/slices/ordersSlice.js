@@ -5,10 +5,12 @@ export const fetchDateOrders = createAsyncThunk(
     'book/fetchDateOrdersStatus',
     async (params, thunkAPI) => {
         const {dateFrom, dateTo} = params;
-        const {data} = await axios.get(
-            `http://localhost:8080/orders/report?from=${dateFrom}&to=${dateTo}`,
+        const reqFormData = new FormData();
+        reqFormData.append('find_date_from', dateFrom);
+        reqFormData.append('find_date_to', dateTo);
+        const {data} = await axios.post(
+            `//localhost:8000/api/reservations/find`,reqFormData
         );
-        console.log(`http://localhost:8080/orders/report?from=${dateFrom}&to=${dateTo}`);
         if (data.length === 0) {
             return thunkAPI.rejectWithValue('Заказов нет');
         }

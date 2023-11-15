@@ -117,8 +117,8 @@ export default function PDFHandler({ orders, isSave, dateFrom, dateTo }) {
             {orders.map((item, index) => (
               <Text style={styles.text}>
                 ID: {item.id}<Br />
-                ID пользователя: {item.user.id}<Br />
-                Дата бронирования: {new Date(item.check_in_date).toLocaleDateString()}<Br />
+                ID пользователя: {item.client.id}<Br />
+                Дата бронирования: {new Date(item.order_date).toLocaleDateString()}<Br />
                 Общая стоимость: {parseFloat(item.total_cost).toFixed(2)} $<Br />
                 Статус: {item.status === 'success' ? 'Оплачено' : 'Не оплачено'}<Br />
               </Text>

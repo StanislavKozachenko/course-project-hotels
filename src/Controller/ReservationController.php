@@ -32,7 +32,8 @@ class ReservationController extends AbstractController
                 'check_out_date' => $reservation->getCheckOutDate(),
                 'client' => $reservation->getClient(),
                 'total_cost' => $reservation->getTotalCost(),
-                'room' => $reservation->getRoom()
+                'room' => $reservation->getRoom(),
+                'order_date' => $reservation->getOrderDate()
             ];
         }
 
@@ -101,7 +102,8 @@ class ReservationController extends AbstractController
                 'check_out_date' => $reservation->getCheckOutDate(),
                 'client' => $reservation->getClient(),
                 'total_cost' => $reservation->getTotalCost(),
-                'room' => $reservation->getRoom()
+                'room' => $reservation->getRoom(),
+                'order_date' => $reservation->getOrderDate()
             ];
 
             return $this->json($data);
@@ -138,7 +140,8 @@ class ReservationController extends AbstractController
                 'check_out_date' => $reservation->getCheckOutDate(),
                 'client' => $reservation->getClient(),
                 'total_cost' => $reservation->getTotalCost(),
-                'room' => $reservation->getRoom()
+                'room' => $reservation->getRoom(),
+                'order_date' => $reservation->getOrderDate()
             ];
         }
 
@@ -169,7 +172,8 @@ class ReservationController extends AbstractController
                 'check_out_date' => $reservation->getCheckOutDate(),
                 'client' => $reservation->getClient(),
                 'total_cost' => $reservation->getTotalCost(),
-                'room' => $reservation->getRoom()
+                'room' => $reservation->getRoom(),
+                'order_date' => $reservation->getOrderDate()
             ];
 
             return $this->json($data);
@@ -200,7 +204,7 @@ class ReservationController extends AbstractController
     /**
      * @throws Exception
      */
-    #[Route('/reservations/find', name: 'get_date_reservation',  methods: ['GET, HEAD'])]
+    #[Route('/reservations/find', name: 'get_date_reservation',  methods: ['POST'])]
     public function getByDateTime(ManagerRegistry $doctrine, Request $request): Response
     {
         $reservations = null;
@@ -221,7 +225,7 @@ class ReservationController extends AbstractController
 
 
         if(!$reservations) {
-            return $this->json('No reservations found ' , 404);
+            return $this->json('No reservations found' , 404);
         }
 
         $data = [];
@@ -234,7 +238,8 @@ class ReservationController extends AbstractController
                 'check_out_date' => $reservation->getCheckOutDate(),
                 'client' => $reservation->getClient(),
                 'total_cost' => $reservation->getTotalCost(),
-                'room' => $reservation->getRoom()
+                'room' => $reservation->getRoom(),
+                'order_date' => $reservation->getOrderDate()
             ];
         }
 

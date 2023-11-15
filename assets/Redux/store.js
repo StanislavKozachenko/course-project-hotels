@@ -9,6 +9,7 @@ import transactions from './slices/transactionsSlice';
 import orders from './slices/ordersSlice';
 
 import hotels from './slices/hotelsSlice';
+import rooms from './slices/roomsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     publishers,
     transactions,
     orders,
-    hotels
+    hotels,
+    rooms
   },
 });

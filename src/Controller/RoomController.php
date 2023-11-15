@@ -47,7 +47,12 @@ class RoomController extends AbstractController
         } else {
             return $this->json("Error: room_number can't be empty!");
         }
-        $fields = ['type', 'cost', 'balcony'];
+        if($request->request->get('balcony')){
+            $room->setRoomNumber(filter_var($request->request->get('balcony')));
+        } else {
+            return $this->json("Error: balcony can't be empty!");
+        }
+        $fields = ['type', 'cost'];
 
         foreach ($fields as $field) {
             $value = $request->request->get($field);
