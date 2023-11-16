@@ -64,13 +64,13 @@ export default function PDFHandler({ orders, isSave, dateFrom, dateTo }) {
   const calcTotal = () => {
     let profitTemp = 0;
     orders.forEach((order) => {
-      profitTemp += parseFloat(order.total_cost).toFixed(2);
+      profitTemp += parseFloat(order.total_cost);
     });
     setProfit(parseFloat(parseFloat(profitTemp).toFixed(2)));
   };
   useEffect(() => {
     calcTotal();
-  }, []);
+  }, [orders]);
   const Br = () => "\n";
   return (
     <>

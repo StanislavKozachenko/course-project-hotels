@@ -18,6 +18,8 @@ import {fetchAllHotels} from "../Redux/slices/hotelsSlice";
 import {fetchRooms} from "../Redux/slices/roomsSlice";
 import ShowRooms from "../components/Admin/ShowRooms/ShowRooms";
 import AddRoom from "../components/Admin/AddRoom/AddRoom";
+import EditRoom from "../components/Admin/EditRoom/EditRoom";
+import DeleteRoom from "../components/Admin/DeleteRoom/DeleteRoom";
 export const AdminContext = createContext();
 
 export default function Admin() {
@@ -120,6 +122,10 @@ export default function Admin() {
               <ShowRooms context={AdminContext} />
             ) : selectedAction === 'addRoom' ? (
               <AddRoom context={AdminContext} />
+            ): selectedAction === 'editRoom' ? (
+              <EditRoom context={AdminContext} />
+            ) : selectedAction === 'deleteRoom' ? (
+              <DeleteRoom context={AdminContext} />
             ) : selectedAction === 'diagram' ? (
               <Diagram />
             ) : selectedAction === 'calc' ? (

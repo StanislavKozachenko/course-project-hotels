@@ -6,9 +6,6 @@ const ShowRoom = ({rooms}) => {
     return (
         <div className="roomsMain">
             {rooms.map((obj) => <ShowRoomItem key={obj.id} {...obj} />)}
-            <div className="back-to-main-button">
-                <Link to="/" className="back-to-main">На главную</Link>
-            </div>
         </div>
     );
 };

@@ -88,7 +88,7 @@ export default function EditBlockItem({
                 <td>
                     <select className="input input-menu" name="category" id={'category-' + id}>
                         {Object.entries(categoryTypes).map(([key, value]) => (
-                            <option key={key} value={key} selected={value === category}>
+                            <option key={key} value={key} selected={key === category}>
                                 {value}
                             </option>
                         ))}

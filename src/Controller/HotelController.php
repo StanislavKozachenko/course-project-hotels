@@ -219,6 +219,7 @@ class HotelController extends AbstractController
                     'room_number' => $room->getRoomNumber(),
                     'type' => $room->getType(),
                     'view_from_window' => $room->getViewFromWindow(),
+                    'balcony' => $room->isBalcony(),
                     'status'=>false
                 ];
             } else {
@@ -229,6 +230,7 @@ class HotelController extends AbstractController
                     'room_number' => $room->getRoomNumber(),
                     'type' => $room->getType(),
                     'view_from_window' => $room->getViewFromWindow(),
+                    'balcony' => $room->isBalcony(),
                     'status'=>true
                 ];
             }

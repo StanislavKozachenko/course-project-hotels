@@ -32,7 +32,6 @@ export default function Report() {
 
     const {reportOrders, reportOrdersStatus} = useSelector((state) => state.orders);
     useEffect(() => {
-        console.log(reportOrders)
     }, [reportOrders])
     return (
         <div>

@@ -1,19 +1,35 @@
 import React from 'react';
-import './ShowRoomsItem.module.scss'
+import './DeleteRoomItem.module.scss'
 import {Link} from "react-router-dom";
+import axios from "axios";
 
-const ShowRoomsItem = ({
-                           id,
-                           hotel,
-                           cost,
-                           room_number,
-                           type,
-                           view_from_window,
-                           balcony
-                       }) => {
+const DeleteRoomItem = ({
+                            id,
+                            hotel,
+                            cost,
+                            room_number,
+                            type,
+                            view_from_window,
+                            balcony
+                        }) => {
+    function onDeleteHandler() {
+            if (document.getElementById('checkbox-' + id).checked) {
+                axios.delete(`http://localhost:8000/api/room/${id}`).then((data) => {console.log(data);alert("Успешно!")});
+            } else {
+                alert('Необходимо выбрать элемент!');
+            }
+    }
+
     return (
         <>
             <tr className="hotel">
+                <td>
+                    <input
+                        className="input input-menu"
+                        type="checkbox"
+                        name="value"
+                        id={'checkbox-' + id}></input>
+                </td>
                 <td>
                     <input className="input input-menu" name="value" value={id}></input>
                 </td>
@@ -39,9 +55,18 @@ const ShowRoomsItem = ({
                 <td>
                     <input className="input input-menu" name="value" value={balcony ? 'Есть' : 'Нет'}></input>
                 </td>
+                <td>
+                    <button
+                        type="submit"
+                        className="saveBtn"
+                        id={'save-' + id}
+                        onClick={onDeleteHandler}>
+                        Удалить
+                    </button>
+                </td>
             </tr>
         </>
     );
 };
 
-export default ShowRoomsItem;
+export default DeleteRoomItem;

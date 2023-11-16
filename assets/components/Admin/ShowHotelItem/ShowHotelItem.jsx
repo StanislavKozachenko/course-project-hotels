@@ -13,6 +13,12 @@ export default function ShowHotelItem({
   rating,
   room_count
 }) {
+  const categoryTypes = {
+    'Asia': 'Азия',
+    'Europe': 'Европа',
+    'America': 'Америка',
+    'Australia': 'Австралия'
+  };
   // const { authors, publishers } = useContext(AdminContext);
   //
   // const bookTypes = ['твёрдый', 'мягкий'];
@@ -40,7 +46,7 @@ export default function ShowHotelItem({
           <input className="input input-menu" name="value" value={address}></input>
         </td>
         <td>
-          <input className="input input-menu" name="value" value={category}></input>
+          <input className="input input-menu" name="value" value={categoryTypes[category]}></input>
         </td>
         <td>
           <input className="input input-menu" name="value" value={imageUrl}></input>

@@ -11,7 +11,8 @@ const ShowRoomItem = (
         room_number,
         type,
         view_from_window,
-        status
+        status,
+        balcony
     }
     ) => {
     const dispatch = useDispatch();
@@ -23,7 +24,8 @@ const ShowRoomItem = (
             hotel,
             room_number,
             type,
-            status
+            status,
+            balcony
         };
         dispatch(addItem(item));
     };
@@ -42,7 +44,8 @@ const ShowRoomItem = (
                     <div>Номер комнаты: <strong>{room_number}</strong></div>
                     <div>Тип: <strong>{type === "1" ? "Одноместный" : type === "2" ? "Двухместный" : "Многоместный"}</strong></div>
                     <div>Стоимость за день: <strong>{cost}</strong>$</div>
-                    {view_from_window !== "" ? <li>Вид: <strong>{view_from_window}</strong></li> : ''}
+                    {view_from_window !== "" ? <div>Вид: <strong>{view_from_window}</strong></div> : ''}
+                    <div>Балкон: <strong>{balcony ? 'Есть' : 'Нет'}</strong></div>
                 </div>
                 <div className="roomItemContent__book">
                     <button disabled={openedStatus} onClick={onClickAdd} className={openedStatus ?"bookRoom--btn button booked" : "bookRoom--btn button"}>{openedStatus ? "Забронировано" : "Забронировать"}</button>

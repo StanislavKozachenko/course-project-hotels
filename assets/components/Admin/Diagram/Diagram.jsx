@@ -8,31 +8,32 @@ export default function Diagram() {
   let buyed = 0;
   let waited = 0;
   orders.forEach((order) => {
-    order.code === 200 ? (buyed += 1) : (waited += 1);
+    order.status === 'success' ? (buyed += 1) : (waited += 1);
   });
   return (
     <div className="main diagram-main">
       <h3 className="header diagram-header">Процент оплаченных заказов</h3>
-      <div>
+      <div className="diagram-main-item">
         <PieChart
           data={[
             { title: `Оплачено: ${buyed}`, value: buyed, color: '#E38627' },
             { title: `Не оплачено: ${waited}`, value: waited, color: '#C13C37' },
           ]}
+          animation
           animationDuration={500}
           animationEasing="ease-out"
           center={[50, 50]}
+          viewBoxSize={[100, 100]}
+          label={(data) => {return data.dataEntry.title}}
+          labelPosition={50}
           lengthAngle={360}
-          lineWidth={20}
+          lineWidth={15}
           paddingAngle={0}
           radius={50}
           rounded
           startAngle={0}
-          viewBoxSize={[100, 100]}
-          label={(data) => data.dataEntry.title}
-          labelPosition={35}
           labelStyle={{
-            fontSize: '6px',
+            fontSize: '8px',
             fontWeight: '400',
           }}
         />
