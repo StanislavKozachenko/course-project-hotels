@@ -54,7 +54,10 @@ export default function DeleteBlockItem({
           <input className="input" name="value" value={rating}></input>
         </td>
         <td>
-          <input className="input" name="value" value={rating}></input>
+          <input className="input" name="value" value={room_count}></input>
+        </td>
+          <td>
+          <input className="input" name="value" value={description ? description : 'Нет описания'}></input>
         </td>
         <td>
           <button

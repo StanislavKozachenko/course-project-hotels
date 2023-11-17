@@ -41,7 +41,7 @@ class ReviewController extends AbstractController
         $entityManager = $doctrine->getManager();
 
         $review = new Review();
-        $request->request->get('review_date') ? $review->setReviewDate($request->request->get('review_date')) : new \DateTime('now');
+        $request->request->get('review_date') ? $review->setReviewDate($request->request->get('review_date')) : $review->setReviewDate(new \DateTime());
         if($request->request->get('review_text')){
             $review->setReviewText($request->request->get('review_text'));
         } else {

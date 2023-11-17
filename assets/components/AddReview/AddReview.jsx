@@ -18,6 +18,9 @@ const AddReview = ({onAddHandler}) => {
                 </td>
                 <td>
                     <input
+                        type="number"
+                        min={1}
+                        max={10}
                         className="input input-menu"
                         name="rating"
                         placeholder="Рейтинг..."

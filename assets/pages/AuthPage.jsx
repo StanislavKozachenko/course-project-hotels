@@ -16,8 +16,10 @@ export default function AuthPage() {
   const { sessionValue, setSessionValue } = useContext(SessionContext);
 
   useEffect(()=>{
-    if(cookies.get('user').split(' ')[3] !== null ) {
-      setRole(cookies.get('user').split(' ')[3]);
+    if(cookies.get('user')) {
+      if (cookies.get('user').split(' ')[3] !== null) {
+        setRole(cookies.get('user').split(' ')[3]);
+      }
     }
   }, [])
 

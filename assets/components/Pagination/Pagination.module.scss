@@ -30,3 +30,9 @@
     }
   }
 }
+.paginate-root li.selected a {
+  display: block;
+  background-color: #564ffa;
+  color: #fff;
+  transition: .2s;
+}

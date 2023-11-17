@@ -84,7 +84,7 @@ export default function Admin() {
         orderId,
         setOrderId,
         hotels,
-          hotelsStatus
+        hotelsStatus
       }}>
       {/*{authorsStatus === 'success' && publishersStatus === 'success' ? (*/}
         <div className="admin-container">

@@ -108,7 +108,7 @@ const EditRoomItem = ({
                     <input
                         className="input input-menu"
                         name="view_from_window"
-                        placeholder={view_from_window}
+                        placeholder={view_from_window ? view_from_window : 'Нет данных'}
                         id={'view_from_window-' + id}></input>
                 </td>
                 <td>

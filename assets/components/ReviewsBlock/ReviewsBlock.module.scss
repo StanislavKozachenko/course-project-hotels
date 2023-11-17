@@ -1,8 +1,9 @@
 .reviews-block {
   margin-top: 50px;
   margin-bottom: 20px;
+  max-height: 300px;
+  overflow-y: auto;
 }
-
 .reviews-block span {
   font-weight: bold;
   font-size: 18px;
